@@ -40,30 +40,37 @@ Concord stores everything in a local SQLite database (`.concord/concord.db`). Th
 
 ## Screenshots
 
-| Screenshot | URL |
-|---|---|
-| Dashboard — full view | `https://raw.githubusercontent.com/<user>/<repo>/main/screenshots/dashboard.png` |
-| Overlap alerts | `https://raw.githubusercontent.com/<user>/<repo>/main/screenshots/overlaps.png` |
-| Agent presence | `https://raw.githubusercontent.com/<user>/<repo>/main/screenshots/agents.png` |
-| Recent activity | `https://raw.githubusercontent.com/<user>/<repo>/main/screenshots/activity.png` |
+### Dashboard — full view
 
-Replace the URLs above with your own, or point them at any image host.
+![Dashboard full view](./screenshots/concord-home-dashboard.png)
+
+### Overlap alerts
+
+![Overlap alerts](./screenshots/overlap-alerts.png)
+
+### Agent presence
+
+![Agent presence](./screenshots/agent-presence.png)
+
+### Recent activity
+
+![Recent activity](./screenshots/activity.png)
 
 ## Database schema
 
 Key tables in `.concord/concord.db`:
 
-| Table | Purpose |
-|---|---|
-| `agents` | Registered agents (`agent_id`, `kind`, `status`, `last_seen`) |
-| `tasks` | Tasks (`task_id`, `title`, `expected_files` JSON, `agent_id`, `version`, `status`) |
-| `task_ownership_events` | Ownership transitions (`transition`, `actor_agent_id`, `from/to_agent_id`) |
-| `events` | Tool events (`tool`, `status`, `detail`, `created_at`) |
-| `agent_messages` | Inter-agent messages (`sender_agent_id`, `recipient_agent_id`, delivery status) |
-| `handoffs` | Evidence-bearing handoff records |
-| `reviews` | Review packets |
-| `agent_endpoints` | Delivery endpoints per agent |
-| `task_updates` | Durable progress updates per task |
+| Table                   | Purpose                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------- |
+| `agents`                | Registered agents (`agent_id`, `kind`, `status`, `last_seen`)                      |
+| `tasks`                 | Tasks (`task_id`, `title`, `expected_files` JSON, `agent_id`, `version`, `status`) |
+| `task_ownership_events` | Ownership transitions (`transition`, `actor_agent_id`, `from/to_agent_id`)         |
+| `events`                | Tool events (`tool`, `status`, `detail`, `created_at`)                             |
+| `agent_messages`        | Inter-agent messages (`sender_agent_id`, `recipient_agent_id`, delivery status)    |
+| `handoffs`              | Evidence-bearing handoff records                                                   |
+| `reviews`               | Review packets                                                                     |
+| `agent_endpoints`       | Delivery endpoints per agent                                                       |
+| `task_updates`          | Durable progress updates per task                                                  |
 
 ## Dashboard
 
