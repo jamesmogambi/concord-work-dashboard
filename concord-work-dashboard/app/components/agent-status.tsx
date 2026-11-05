@@ -20,7 +20,7 @@ export function AgentStatus({ status, lastSeen }: AgentStatusProps) {
 
   if (!mounted) {
     return (
-      <span className="text-xs mt-2 inline-block px-2 py-0. rounded bg-gray-100 text-gray-500">
+      <span className="text-xs mt-2 inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-500">
         {status}
       </span>
     );
@@ -28,9 +28,9 @@ export function AgentStatus({ status, lastSeen }: AgentStatusProps) {
 
   return (
     <span
-      className={`text-xs mt-2 inline-block px-2 py-0.5 rounded ${
+      className={`text-xs mt-2 inline-block px-2 py-0.5 rounded font-medium ${
         status === "active" && !stale
-          ? "bg-green-100 text-green-700"
+          ? "bg-emerald-100 text-emerald-700"
           : "bg-amber-100 text-amber-700"
       }`}
     >
