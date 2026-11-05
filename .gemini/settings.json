@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "concord": {
+      "command": "concord-mcp",
+      "env": {
+        "CONCORD_REPO_ROOT": "/home/james/projects/concord-demo"
+      }
+    }
+  },
+  "tools": {
+    "shell": {
+      "backgroundCompletionBehavior": "inject"
+    }
+  },
+  "experimental": {
+    "modelSteering": true
+  }
+}
