@@ -104,6 +104,25 @@ tasks: { n: 2 }
 events: { n: 3 }
 ```
 
+## Deploying to Vercel
+
+The app is configured for one-click Vercel deployment. `next.config.ts` uses Turbopack with `cacheComponents` removed (the config was stripped once the `dynamic = "force-dynamic"` route segment was deleted — Cache Components is incompatible with that export).
+
+### Seed database
+
+When the real Concord workspace is absent (the case on a fresh Vercel deployment), `lib/db.ts` generates a fallback seed database at `.seed/concord.db` containing the same demo data: 3 agents, 2 overlapping tasks, and 3 events. The page renders that data and shows an amber banner in the header pointing at `CONCORD_DB_PATH`.
+
+To point the deployed dashboard at a live workspace, set `CONCORD_DB_PATH` in the Vercel project settings.
+
+### Build verification
+
+```bash
+npm run build
+# => Route (app) /  ○ (Static) prerendered as static content
+```
+
+The `fs.existsSync` calls in `lib/db.ts` carry `/*turbopackIgnore: true*/` comments so Turbopack doesn't bundle the whole project into the server trace.
+
 ## What I'd build next
 
 1. **Ownership history view.** `task_ownership_events` is empty for `start_work` claims in this workspace but is populated by handoffs. A per-task timeline would show how ownership moved between agents.

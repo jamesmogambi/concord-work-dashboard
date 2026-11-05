@@ -6,7 +6,10 @@ import {
   computeOverlaps,
   parseFiles,
 } from "@/lib/queries";
+import { dbPath } from "@/lib/db";
 import { AgentStatus } from "@/app/components/agent-status";
+
+const usingSeed = dbPath().includes(".seed");
 
 export default function Dashboard() {
   const agents = getAgents();
@@ -25,8 +28,17 @@ export default function Dashboard() {
             </h1>
           </div>
           <p className="text-slate-300 text-sm mt-2 ml-4">
-            Live coordination state from <code className="text-slate-200 bg-slate-700/50 px-1 rounded">.concord/concord.db</code>
+            Live coordination state from <code className="text-slate-200 bg-slate-700/50 px-1 rounded">{dbPath()}</code>
           </p>
+          {usingSeed && (
+            <p className="text-amber-300 text-xs mt-2 ml-4">
+              Showing sample data — the local Concord workspace was not found. Set{" "}
+              <code className="text-amber-200 bg-slate-700/50 px-1 rounded">
+                CONCORD_DB_PATH
+              </code>{" "}
+              to point at your own <code>.concord/concord.db</code>.
+            </p>
+          )}
         </div>
       </header>
 

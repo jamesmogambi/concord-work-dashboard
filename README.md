@@ -1,5 +1,7 @@
 # Concord Demo
 
+[![Deploy with Vercel](https://img.shields.io/badge/deploy-vercel-black)](https://vercel.com/import?template=github)
+
 A demo repository for [Concord](https://github.com/concord-ai/concord-mcp) — shared work-state for coding agents — featuring a Next.js dashboard that reads live coordination state from `.concord/concord.db`.
 
 ## What is this?
@@ -56,6 +58,38 @@ Concord stores everything in a local SQLite database (`.concord/concord.db`). Th
 
 ![Recent activity](./screenshots/activity.png)
 
+## Deploy on Vercel
+
+This app is configured to deploy to Vercel as-is. The dashboard reads SQLite at runtime, so it ships with a **seed database** that mirrors the demo workspace — when the real `.concord/concord.db` is absent (the case on a fresh Vercel deployment), it falls back to the seed so the page renders sample overlap data instead of failing.
+
+### One-click deploy
+
+Push the repo to GitHub, GitLab, or Bitbucket, then import it in the Vercel dashboard. No build settings to change — `next.config.ts` is already set up for Turbopack and `cacheComponents`.
+
+### Manual deploy
+
+```bash
+npm i -g vercel
+cd concord-work-dashboard
+vercel --prod
+```
+
+### Environment variables
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `CONCORD_DB_PATH` | Absolute path to your own `.concord/concord.db` | `../.concord/concord.db` (relative to cwd) |
+
+To point the deployed dashboard at a live Concord workspace, set `CONCORD_DB_PATH` in the Vercel project settings. Without it, the seed DB is used.
+
+### What the seed contains
+
+- 3 agents (`kilo-1`, `cursor-1`, `copilot-cli:37562456`)
+- 2 tasks both claiming `src/api/users.ts` — so the overlap panel is populated
+- 3 events, including the `1 overlap(s)` claim event
+
+The seed is generated on first request and cached in `.seed/concord.db` at the deployment's working directory. It is not committed.
+
 ## Database schema
 
 Key tables in `.concord/concord.db`:
@@ -84,6 +118,14 @@ npm install
 npm run dev
 # open http://localhost:3000
 ```
+
+The app expects the Concord database at `../.concord/concord.db` relative to the Next.js project root. Override the location with:
+
+```bash
+CONCORD_DB_PATH=/absolute/path/to/concord.db npm run dev
+```
+
+If the database is absent, the app generates a **seed database** (`.seed/concord.db`) with sample overlap data so the page renders instead of failing. A banner in the header tells you when you're looking at the seed.
 
 ### Build
 
